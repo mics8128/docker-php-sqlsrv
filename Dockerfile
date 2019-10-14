@@ -10,6 +10,11 @@ RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install msodbcsql17 mssql-tools -yqq
 RUN apt-get install unixodbc-dev -yqq
 
+# install necessary locales for mssql-tools
+RUN apt-get install -y locales \
+    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+    && locale-gen
+
 # install php=sqlsrv extension
 RUN pecl install sqlsrv
 RUN pecl install pdo_sqlsrv
